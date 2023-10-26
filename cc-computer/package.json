@@ -1,0 +1,17 @@
+{
+  "name": "cc-computer",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tstl",
+    "dev": "tstl --watch"
+  },
+  "devDependencies": {
+    "@ccts/craftos-types": "^1.1.4",
+    "@typescript-to-lua/language-extensions": "^1.19.0",
+    "advanced-peripheral-types": "^0.1.4",
+    "typescript": "^5.2.2",
+    "typescript-to-lua": "^1.20.1",
+    "typings": "workspace:*"
+  }
+}

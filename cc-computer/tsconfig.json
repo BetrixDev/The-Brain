@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "moduleResolution": "Node",
+    "types": [
+      "advanced-peripheral-types",
+      "@typescript-to-lua/language-extensions",
+      "@ccts/craftos-types"
+    ],
+    "strict": true,
+    "baseUrl": ".",
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*.ts"],
+  "tstl": {
+    "luaTarget": "JIT",
+    "buildMode": "default",
+    "luaBundle": "build/brain.lua",
+    "luaBundleEntry": "src/main.ts",
+    "luaLibImport": "require-minimal",
+    "noImplicitSelf": true
+  }
+}
