@@ -2,3 +2,4 @@ packages:
   - "cc-computer"
   - "server"
   - "typings"
+  - "fake-server"

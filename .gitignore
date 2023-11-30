@@ -35,5 +35,5 @@ yarn-error.log*
 # vercel
 .vercel
 *.sqlite
-server/.data
-server/dist
+dist
+.data

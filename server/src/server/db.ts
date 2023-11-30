@@ -1,4 +1,9 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import {
+  sqliteTable,
+  text,
+  integer,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import { drizzle, BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";
 import { env } from "src/env";
@@ -14,18 +19,26 @@ const sqlite = new Database(env.DATABASE_LOCATION);
 
 export const db: BetterSQLite3Database = drizzle(sqlite);
 
-export const storedItems = sqliteTable("stored_items", {
-  fingerprint: text("fingerprint").primaryKey(),
-  itemId: text("item_id").notNull(),
-  modId: text("mod_id").notNull(),
-  amount: integer("amount").notNull(),
-  lastModified: integer("last_modified")
-    .$defaultFn(() => Date.now())
-    .notNull(),
-  isCraftable: integer("is_craftable", { mode: "boolean" })
-    .default(false)
-    .notNull(),
-});
+export const storedItems = sqliteTable(
+  "stored_items",
+  {
+    fingerprint: text("fingerprint").primaryKey(),
+    itemId: text("item_id").notNull(),
+    modId: text("mod_id").notNull(),
+    amount: integer("amount").notNull(),
+    lastModified: integer("last_modified")
+      .$defaultFn(() => Date.now())
+      .notNull(),
+    isCraftable: integer("is_craftable", { mode: "boolean" })
+      .default(false)
+      .notNull(),
+  },
+  (table) => {
+    return {
+      fingerprintIdx: uniqueIndex("fingerprint_index").on(table.fingerprint),
+    };
+  }
+);
 
 export const itemAssets = sqliteTable("item_assets", {
   itemId: text("item_id").primaryKey(),
@@ -55,9 +68,7 @@ export const chatMessages = sqliteTable("chat_messages", {
 });
 
 export const itemLimits = sqliteTable("item_limits", {
-  itemId: text("item_id")
-    .primaryKey()
-    .references(() => itemAssets.itemId),
+  fingerprint: text("fingerprint").primaryKey(),
   min: integer("min"),
   max: integer("max"),
   dateCreated: integer("date_created")
@@ -113,7 +124,7 @@ export async function getStoredItems({
             max: itemLimits.max,
           })
           .from(itemLimits)
-          .where(eq(itemLimits.itemId, result.itemId));
+          .where(eq(itemLimits.fingerprint, result.fingerprint));
 
         return {
           ...result,
@@ -164,7 +175,7 @@ export async function getStoredItems({
             max: itemLimits.max,
           })
           .from(itemLimits)
-          .where(eq(itemLimits.itemId, result.itemId));
+          .where(eq(itemLimits.fingerprint, result.fingerprint));
 
         return {
           ...result,

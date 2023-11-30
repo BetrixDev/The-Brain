@@ -1,5 +1,5 @@
 {
-  "name": "the-brain",
+  "name": "server",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -35,6 +35,7 @@
     "envsafe": "^2.0.3",
     "express": "^4.18.2",
     "fuse.js": "^6.6.2",
+    "geist": "^1.0.0",
     "jotai": "^2.4.3",
     "lucide-react": "^0.287.0",
     "nodemon": "^3.0.1",

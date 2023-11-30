@@ -5,8 +5,17 @@ export type StoredItemPayload = {
     amount: number;
     fingerprint: string;
     isCraftable: boolean;
-    isCrafting: boolean;
   };
+};
+
+export type StoredItemsPayload = {
+  type: "storedItems";
+  data: {
+    id: string;
+    amount: number;
+    fingerprint: string;
+    isCraftable: boolean;
+  }[];
 };
 
 export type StoredItemEOLPayload = {
@@ -28,6 +37,7 @@ export type GameChatMessagePayload = {
 export type TurtleWebsocketPayload =
   | StoredItemPayload
   | UploadLimitsPayload
+  | StoredItemsPayload
   | StoredItemEOLPayload
   | GameChatMessagePayload;
 
@@ -40,8 +50,7 @@ export type CraftItemPayload = {
 
 export type SetLimitPayload = {
   type: "setLimit";
-  itemId: string;
-  modId: string;
+  fingerprint: string;
   min?: number;
   max?: number;
 };

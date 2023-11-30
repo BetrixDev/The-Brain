@@ -9,19 +9,14 @@ import {
 } from "@/components/ui/card";
 import { BoxIcon, BoxesIcon, BrainCircuitIcon } from "lucide-react";
 import { formatNumber, trpc } from "./lib/utils";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { socket } from "./socket";
 import { LimitsDialogue } from "./components/limits-dialogue";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
 import { ThemeToggle } from "./components/theme-toggle";
 import { useAtom } from "jotai";
-import {
-  selectedItemAtom,
-  sortingDirectionAtom,
-  sortingVariableAtom,
-  storedItemsSearchQueryAtom,
-} from "./atoms";
+import { selectedItemAtom, storedItemsSearchQueryAtom } from "./atoms";
 import { Label } from "./components/ui/label";
 
 export function App() {
@@ -80,7 +75,7 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen font-semibold main-grid p-4">
+    <div className="min-h-screen font-normal main-grid p-4">
       {selectedItem !== undefined && <LimitsDialogue />}
 
       <header className="[grid-area:header] border rounded-md items-center p-3 gap-4 flex justify-between">

@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=server --filter=cc-computer",
+    "dev:sever": "turbo run dev --filter=server",
+    "dev:fake": "turbo run dev --filter=server --filter=fake-server",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

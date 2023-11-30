@@ -80,7 +80,10 @@ export const appRouter = t.router({
             eq(storedItems.modId, input.modId)
           )
         )
-        .leftJoin(itemLimits, eq(storedItems.itemId, itemLimits.itemId))
+        .leftJoin(
+          itemLimits,
+          eq(storedItems.fingerprint, itemLimits.fingerprint)
+        )
         .innerJoin(itemAssets, eq(storedItems.itemId, itemAssets.itemId))
         .innerJoin(modAssets, eq(itemAssets.modId, modAssets.modId))
         .limit(1)
@@ -102,8 +105,7 @@ export const appRouter = t.router({
   updateItemLimits: t.procedure
     .input(
       z.object({
-        itemid: z.string(),
-        modId: z.string(),
+        fingerprint: z.string(),
         min: z.number().optional(),
         max: z.number().optional(),
       })
@@ -128,7 +130,7 @@ export const appRouter = t.router({
       const existingLimit = await db
         .select()
         .from(itemLimits)
-        .where(eq(itemLimits.itemId, input.itemid))
+        .where(eq(itemLimits.fingerprint, input.fingerprint))
         .limit(1)
         .execute();
 
@@ -136,30 +138,25 @@ export const appRouter = t.router({
         if (input.min === undefined && input.max === undefined) {
           await db
             .delete(itemLimits)
-            .where(eq(itemLimits.itemId, input.itemid));
+            .where(eq(itemLimits.fingerprint, input.fingerprint));
         } else {
-          await db
-            .insert(itemLimits)
-            .values({ itemId: input.itemid, min: input.min, max: input.max });
+          await db.insert(itemLimits).values({
+            fingerprint: input.fingerprint,
+            min: input.min,
+            max: input.max,
+          });
         }
       } else {
         await db
           .update(itemLimits)
           .set({ min: input.min, max: input.max })
-          .where(eq(itemLimits.itemId, input.itemid))
+          .where(eq(itemLimits.fingerprint, input.fingerprint))
           .execute();
       }
 
       io.emit("updateItems");
 
-      const [{ modId }] = await db
-        .select({ modId: modAssets.modId })
-        .from(itemAssets)
-        .where(eq(itemAssets.itemId, input.itemid))
-        .innerJoin(modAssets, eq(modAssets.modId, itemAssets.modId))
-        .execute();
-
-      events.emit("updateLimits", input.itemid, modId, {
+      events.emit("updateLimits", input.fingerprint, {
         max: input.max,
         min: input.min,
       });
@@ -167,11 +164,11 @@ export const appRouter = t.router({
       return true;
     }),
   resetItemLimit: t.procedure
-    .input(z.object({ itemId: z.string(), modId: z.string() }))
+    .input(z.object({ fingerprint: z.string() }))
     .mutation(async ({ input }) => {
       await db
         .delete(itemLimits)
-        .where(eq(itemLimits.itemId, input.itemId))
+        .where(eq(itemLimits.fingerprint, input.fingerprint))
         .execute();
 
       io.emit("updateItems");

@@ -65,8 +65,7 @@ export function LimitsDialogue() {
 
   function tryUpdateLimits() {
     mutate({
-      itemid: selectedItem?.id!,
-      modId: data?.mod.id!,
+      fingerprint: data!.fingerprint,
       max: maxLimit,
       min: minLimit,
     });
@@ -170,8 +169,7 @@ export function LimitsDialogue() {
           <Button
             onClick={() =>
               resetLimitMutation({
-                itemId: selectedItem?.id!,
-                modId: data.mod.id!,
+                fingerprint: data.fingerprint!,
               })
             }
             variant="destructive"

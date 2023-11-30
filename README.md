@@ -20,6 +20,7 @@ The most targeted and niche dashboard ever created for anything under the Sun.
 - Add item amount history
 - Online players list
 - Heavily optimize (a lot)
+- Automatically download correct vanilla.jar based upon the modpack version _(fetch-assets script)_
 
 # Usage (Coming Soon)
 This project is intended to be deployed on the same machine that is running the Minecraft server instance although can be run anywhere else as long as the constant websocket pinging doesn't exceed bandwidth limitations.
