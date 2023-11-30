@@ -2,7 +2,8 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": [
     "**/.env.*local",
-    "**/.env"
+    "**/.env",
+    "**/.env.production"
   ],
   "pipeline": {
     "build": {
@@ -14,12 +15,7 @@
     "lint": {},
     "dev": {
       "cache": false,
-      "persistent": true,
-      "env": [
-        "DATABASE_LOCATION",
-        "MODPACK_LOCATION",
-        "MINECRAFT_VERSION"
-      ]
+      "persistent": true
     }
   }
 }

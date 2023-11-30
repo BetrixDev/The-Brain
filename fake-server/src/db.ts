@@ -1,10 +1,9 @@
 import Database from "better-sqlite3";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { env } from "./env";
 import { randomUUID } from "crypto";
 import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
 
-const sqlite = new Database(env.DATABASE_LOCATION);
+const sqlite = new Database("fake.db");
 
 export const db: BetterSQLite3Database = drizzle(sqlite);
 

@@ -2,7 +2,7 @@
 
 The most targeted and niche dashboard ever created for anything under the Sun.
 
-![Dashboard Preview](dashboard-preview.png)
+![Dashboard Preview](./\.README/dashboard-preview.png)
 
 ## Features
 - Auto crafting for AE2 and Refined Storage Systems

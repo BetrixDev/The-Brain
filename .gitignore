@@ -35,5 +35,6 @@ yarn-error.log*
 # vercel
 .vercel
 *.sqlite
+*.db
 dist
 .data

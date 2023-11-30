@@ -11,7 +11,6 @@ import {
 } from "./db";
 import { eq } from "drizzle-orm";
 import cors from "cors";
-import { config } from "dotenv";
 import { fuse } from "./fuse";
 import type {
   CraftItemPayload,
@@ -20,8 +19,6 @@ import type {
 } from "typings";
 import { io } from "./io";
 import { events } from "./event-emitter";
-
-config();
 
 const app = express();
 
